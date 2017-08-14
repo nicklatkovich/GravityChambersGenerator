@@ -43,6 +43,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Chamber.cs" />
+    <Compile Include="ChamberGenerator.cs" />
     <Compile Include="Grid.cs" />
     <Compile Include="Point.cs" />
     <Compile Include="Program.cs" />

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace GravityLabChamberGenerator {
     class Grid<T> {
@@ -9,7 +10,7 @@ namespace GravityLabChamberGenerator {
         public uint Width => (uint)Size.X;
         public uint Height => (uint)Size.Y;
 
-        public Grid(int width, int height, T defaultValue) {
+        public Grid(uint width, uint height, T defaultValue) {
             arr = new T[width][ ];
             for (uint i = 0; i < width; i++) {
                 arr[i] = new T[height];
@@ -65,5 +66,15 @@ namespace GravityLabChamberGenerator {
                 }
             }
         }
+
+        public Grid<K> Convert<K>(Func<T, K> translator) {
+            Grid<K> result = new Grid<K>(Width, Height, translator(this[0, 0]));
+            for (uint x = 0; x < Width; x++) {
+                for (uint y = 0; y < Height; y++) {
+                    result[x, y] = translator(this[x,y]);
+                }
+            }
+            return result;
+         }
     }
 }

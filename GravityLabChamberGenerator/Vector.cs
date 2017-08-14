@@ -1,12 +1,24 @@
-﻿namespace GravityLabChamberGenerator {
+﻿using System.Collections.Generic;
+
+namespace GravityLabChamberGenerator {
     class Vector<T> {
         private T[ ] _arr = new T[1];
         public uint Size {
             get;
-            protected set;
+            set;
         } = 0;
+        public T Last => this[Size - 1];
 
         public Vector( ) {
+        }
+
+        public Vector(ICollection<T> source) {
+            Size = (uint)source.Count;
+            _arr = new T[Size];
+            uint index = 0;
+            foreach (T value in source) {
+                _arr[index++] = value;
+            }
         }
 
         public void Push(T value) {
