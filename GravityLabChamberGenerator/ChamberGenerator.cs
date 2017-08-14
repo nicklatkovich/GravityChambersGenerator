@@ -10,6 +10,7 @@ namespace GravityLabChamberGenerator {
                 Utils.URandom(height - 2) + 1);
             result.StartPoint = startPoint;
             result.Walls = GenerateRoom(width, height, startPoint);
+            var a = GenerateWay(result);
             return result;
         }
 
@@ -62,20 +63,90 @@ namespace GravityLabChamberGenerator {
             return map.Convert(RoomConverter);
         }
 
-        public static void GenerateGraph(Chamber chamber) {
-            Queue<Tuple<Vector<Point>, uint>> queue = new Queue<Tuple<Vector<Point>, uint>>( );
-            queue.Enqueue(new Tuple<Vector<Point>, uint>(new Vector<Point>(
+        public static Tuple<Vector<Point>, uint> GetMostFarCells(Grid<bool> walls, Point from) {
+            Grid<int> wayLengthes = new Grid<int>(walls.Width, walls.Height, -1);
+            wayLengthes[from] = 0;
+            Queue<Point> q = new Queue<Point>( );
+            q.Enqueue(from.Clone( ));
+            Vector<Point> result = new Vector<Point>( );
+            uint maxSteps = 0;
+            while (q.Count > 0) {
+                Point pos = q.Dequeue( );
+                for (uint d = 0; d < 4; d++) {
+                    Point dirPos = pos.Clone( );
+                    Point prevPos = pos.Clone( );
+                    dirPos.Move(d);
+                    while (!walls[dirPos]) {
+                        dirPos.Move(d);
+                        prevPos.Move(d);
+                    }
+                    if (wayLengthes[prevPos] == -1 || wayLengthes[prevPos] > wayLengthes[pos] + 1) {
+                        wayLengthes[prevPos] = wayLengthes[pos] + 1;
+                        if (maxSteps < wayLengthes[prevPos]) {
+                            maxSteps = (uint)wayLengthes[prevPos];
+                            result.Size = 0;
+                            result.Push(prevPos.Clone( ));
+                        } else if (maxSteps == wayLengthes[prevPos]) {
+                            result.Push(prevPos.Clone( ));
+                        }
+                        q.Enqueue(prevPos.Clone( ));
+                    }
+                }
+            }
+            return new Tuple<Vector<Point>, uint>(result, maxSteps);
+        }
+
+        public static Vector<Vector<Point>> GenerateWay(Chamber chamber) {
+            Queue<Tuple<Vector<Point>, uint>> q = new Queue<Tuple<Vector<Point>, uint>>( );
+            q.Enqueue(new Tuple<Vector<Point>, uint>(new Vector<Point>(
                 new Point[ ] { chamber.StartPoint.Clone( ) }), 0));
-            Vector<Tuple<Vector<Point>, uint>> result = new Vector<Tuple<Vector<Point>, uint>>( );
-            Dictionary<Point, Vector<Point>> mostFarCells = new Dictionary<Point, Vector<Point>>( );
-            while (queue.Count > 0) {
-                Tuple<Vector<Point>, uint> deq = queue.Dequeue( );
+            Vector<Vector<Point>> result = new Vector<Vector<Point>>( );
+            uint maxCost = 0;
+            Dictionary<Point, Tuple<Vector<Point>, uint>> mostFarCells =
+                new Dictionary<Point, Tuple<Vector<Point>, uint>>( );
+            while (q.Count > 0) {
+                Tuple<Vector<Point>, uint> deq = q.Dequeue( );
                 Vector<Point> way = deq.Item1;
                 uint cost = deq.Item2;
                 if (!mostFarCells.ContainsKey(way.Last)) {
-
+                    mostFarCells[way.Last] = GetMostFarCells(chamber.Walls, way.Last);
+                }
+                Tuple<Vector<Point>, uint> mfc = mostFarCells[way.Last];
+                Vector<Point> cells = mfc.Item1;
+                uint length = mfc.Item2;
+                uint newCost = cost + length;
+                foreach (Point a in cells) {
+                    bool needToAdd = true;
+                    for (uint i = 0; i < way.Size - 1; i++) {
+                        if (way[i] == way.Last && way[i + 1] == a) {
+                            needToAdd = false;
+                            break;
+                        }
+                    }
+                    bool canBeResult = true;
+                    for (uint i = 0; i < way.Size; i++) {
+                        if (way[i] == a) {
+                            canBeResult = false;
+                            break;
+                        }
+                    }
+                    if (needToAdd) {
+                        Vector<Point> newWay = way.Clone( );
+                        newWay.Push(a);
+                        q.Enqueue(new Tuple<Vector<Point>, uint>(newWay.Clone( ), newCost));
+                        if (canBeResult) {
+                            if (newCost > maxCost) {
+                                result.Size = 0;
+                                result.Push(newWay.Clone( ));
+                                maxCost = newCost;
+                            } else if (newCost == maxCost) {
+                                result.Push(newWay.Clone( ));
+                            }
+                        }
+                    }
                 }
             }
+            return result;
         }
     }
 }

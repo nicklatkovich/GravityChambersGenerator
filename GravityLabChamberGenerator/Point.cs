@@ -14,11 +14,11 @@
         }
 
         public override bool Equals(object obj) {
-            Point other = obj as Point;
-            if (other == null) {
-                return false;
+            if (obj is Point) {
+                Point other = obj as Point;
+                return X == other.X && Y == other.Y;
             }
-            return X == other.X && Y == other.Y;
+            return false;
         }
 
         public override int GetHashCode( ) {
@@ -37,6 +37,14 @@
 
         public override string ToString( ) {
             return "{" + X + ", " + Y + "}";
+        }
+
+        public static bool operator ==(Point p1, Point p2) {
+            return p1.Equals(p2);
+        }
+
+        public static bool operator !=(Point p1, Point p2) {
+            return !p1.Equals(p2);
         }
     }
 }
