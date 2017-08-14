@@ -8,6 +8,7 @@ namespace GravityLabChamberGenerator {
             Point start = new Point(
                 Utils.URandom(map.Width - 2) + 1,
                 Utils.URandom(map.Height - 2) + 1);
+            Console.WriteLine("Start is " + start);
             map[start] = 2;
             Queue<Point> q = new Queue<Point>( );
             q.Enqueue(start.Clone( ));
@@ -48,6 +49,11 @@ namespace GravityLabChamberGenerator {
                     }
                 }
             }
+            map.Replace(new Dictionary<uint, uint>( ) {
+                { 0, 1 },
+                { 3, 1 },
+                { 1, 0 },
+            });
             Console.WriteLine(map);
 
 #if DEBUG

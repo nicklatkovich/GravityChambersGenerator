@@ -34,5 +34,9 @@
             X += Utils.DX[d];
             Y += Utils.DY[d];
         }
+
+        public override string ToString( ) {
+            return "{" + X + ", " + Y + "}";
+        }
     }
 }

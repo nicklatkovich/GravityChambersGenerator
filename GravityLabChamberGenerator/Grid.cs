@@ -1,4 +1,6 @@
-﻿namespace GravityLabChamberGenerator {
+﻿using System.Collections.Generic;
+
+namespace GravityLabChamberGenerator {
     class Grid<T> {
         private T[ ][ ] arr;
         public Point Size {
@@ -52,6 +54,16 @@
                 result += '\n';
             }
             return result;
+        }
+
+        public void Replace(Dictionary<T, T> replaces) {
+            for (uint x = 0; x < Width; x++) {
+                for (uint y = 0; y < Height; y++) {
+                    if (replaces.ContainsKey(this[x, y])) {
+                        this[x, y] = replaces[this[x, y]];
+                    }
+                }
+            }
         }
     }
 }
