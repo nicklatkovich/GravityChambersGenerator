@@ -42,8 +42,8 @@
 
         public override string ToString( ) {
             string result = "";
-            result += Width + '\n';
-            result += Height + '\n';
+            result += Width.ToString( ) + '\n';
+            result += Height.ToString( ) + '\n';
             for (uint y = 0; y < Height; y++) {
                 for (uint x = 0; x < Width; x++) {
                     // TODO: make converting for non one-symbols cells

@@ -8,6 +8,11 @@
             Y = y;
         }
 
+        public Point(uint x, uint y) {
+            X = (int)x;
+            Y = (int)y;
+        }
+
         public override bool Equals(object obj) {
             Point other = obj as Point;
             if (other == null) {
@@ -22,6 +27,12 @@
 
         public Point Clone( ) {
             return new Point(X, Y);
+        }
+
+        public void Move(uint direction) {
+            uint d = direction % 4;
+            X += Utils.DX[d];
+            Y += Utils.DY[d];
         }
     }
 }
