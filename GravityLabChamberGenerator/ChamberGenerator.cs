@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 
 namespace GravityLabChamberGenerator {
     static class ChamberGenerator {
@@ -8,8 +9,10 @@ namespace GravityLabChamberGenerator {
             Point startPoint = new Point(
                 Utils.URandom(width - 2) + 1,
                 Utils.URandom(height - 2) + 1);
+            //Point startPoint = new Point(13, 5);
             result.StartPoint = startPoint;
             result.Walls = GenerateRoom(width, height, startPoint);
+            //result.Walls = LoadWallsMapFromFile("walls.txt");
             var a = GenerateWay(result);
             return result;
         }
@@ -147,6 +150,27 @@ namespace GravityLabChamberGenerator {
                 }
             }
             return result;
+        }
+
+        public static Grid<bool> LoadWallsMapFromFile(string fileName) {
+            Grid<bool> map;
+            using (FileStream fs = new FileStream(fileName, FileMode.OpenOrCreate)) {
+                using (StreamReader sr = new StreamReader(fs)) {
+                    string s;
+                    s = sr.ReadLine( );
+                    uint width = uint.Parse(s);
+                    s = sr.ReadLine( );
+                    uint height = uint.Parse(s);
+                    map = new Grid<bool>(width, height, false);
+                    for (uint y = 0; y < height; y++) {
+                        s = sr.ReadLine( );
+                        for (uint x = 0; x < width; x++) {
+                            map[x, y] = s[(int)x] == '1';
+                        }
+                    }
+                }
+            }
+            return map;
         }
     }
 }
