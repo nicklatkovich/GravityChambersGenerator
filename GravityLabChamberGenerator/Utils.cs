@@ -5,13 +5,9 @@ namespace GravityLabChamberGenerator {
     static class Utils {
         private static Random _rand = new Random( );
 
-        public static double Random( ) {
-            return _rand.NextDouble( );
-        }
-
-        public static uint URandom(uint x) {
-            return (uint)Math.Floor(Random( ) * x);
-        }
+        public static double Random( ) => _rand.NextDouble( );
+        public static double Random(double x) => Random( ) * x;
+        public static uint URandom(uint x) => (uint)Math.Floor(Random(x));
 
         public static List<uint> Shuffle(uint numbersCount) {
             uint[ ] preresult = new uint[numbersCount];
