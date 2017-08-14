@@ -25,5 +25,8 @@ namespace GravityLabChamberGenerator {
             }
             return new List<uint>(preresult);
         }
+
+        public static readonly int[ ] DX = { 1, 0, -1, 0 };
+        public static readonly int[ ] DY = { 0, -1, 0, 1 };
     }
 }
