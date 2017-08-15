@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace GravityLabChamberGenerator {
-    class Vector<T> : IEnumerable<T> {
+    class Vector<T> : IEnumerable<T>, ICollection<T> {
         private T[ ] _arr = new T[1];
         private uint _size = 0;
         public uint Size {
@@ -11,7 +11,7 @@ namespace GravityLabChamberGenerator {
                 return _size;
             }
             set {
-                if (_size > value) {
+                if (value <= _arr.Length / 2) {
                     _size = value;
                     Clean( );
                 } else if (_size < value) {
@@ -21,12 +21,17 @@ namespace GravityLabChamberGenerator {
         }
         public T Last => this[Size - 1];
 
+        #region Collection
+        public int Count => (int)Size;
+        public bool IsReadOnly => false;
+        #endregion
+
         #region Constructors
         public Vector( ) {
         }
 
         public Vector(ICollection<T> source) {
-            _size = (uint)source.Count;
+            _size = source.Count == 0 ? 1 : (uint)source.Count;
             _arr = new T[Size];
             uint index = 0;
             foreach (T value in source) {
@@ -62,7 +67,7 @@ namespace GravityLabChamberGenerator {
 
         }
         public Vector<T> Clone( ) {
-            return new Vector<T>(this as IEnumerable<T>);
+            return new Vector<T>(this as ICollection<T>);
         }
 
         public void Clean( ) {
@@ -114,6 +119,26 @@ namespace GravityLabChamberGenerator {
 
         public IEnumerator GetEnumerator( ) {
             return new Enumerator(this);
+        }
+
+        public void Add(T item) {
+            throw new NotImplementedException( );
+        }
+
+        public void Clear( ) {
+            throw new NotImplementedException( );
+        }
+
+        public bool Contains(T item) {
+            throw new NotImplementedException( );
+        }
+
+        public void CopyTo(T[ ] array, int arrayIndex) {
+            throw new NotImplementedException( );
+        }
+
+        public bool Remove(T item) {
+            throw new NotImplementedException( );
         }
         #endregion
     }

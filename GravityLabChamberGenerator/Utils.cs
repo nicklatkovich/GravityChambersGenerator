@@ -8,6 +8,9 @@ namespace GravityLabChamberGenerator {
         public static double Random( ) => _rand.NextDouble( );
         public static double Random(double x) => Random( ) * x;
         public static uint URandom(uint x) => (uint)Math.Floor(Random(x));
+        public static void RandomSetSeed(int seed) {
+            _rand = new Random(seed);
+        }
 
         public static List<uint> Shuffle(uint numbersCount) {
             uint[ ] preresult = new uint[numbersCount];
