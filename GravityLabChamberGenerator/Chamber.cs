@@ -127,31 +127,33 @@ namespace GravityLabChamberGenerator {
                 uint length = mfc.Item2;
                 uint newCost = cost + length;
                 foreach (Point a in cells) {
-                    bool needToAdd = way[0] != a;
-                    for (uint i = 0; i < way.Size - 1; i++) {
-                        if (way[i] == way.Last && way[i + 1] == a) {
-                            needToAdd = false;
-                            break;
+                    bool needToAdd;
+                    if (needToAdd = way[0] != a) {
+                        for (uint i = 0; i < way.Size - 1; i++) {
+                            if (way[i] == way.Last && way[i + 1] == a) {
+                                needToAdd = false;
+                                break;
+                            }
                         }
-                    }
-                    bool canBeResult = true;
-                    for (uint i = 0; i < way.Size; i++) {
-                        if (way[i] == a) {
-                            canBeResult = false;
-                            break;
-                        }
-                    }
-                    if (needToAdd) {
-                        Vector<Point> newWay = way.Clone( );
-                        newWay.Push(a);
-                        q.Enqueue(new Tuple<Vector<Point>, uint>(newWay.Clone( ), newCost));
-                        if (canBeResult) {
-                            if (newCost > maxCost) {
-                                result.Size = 0;
-                                result.Push(newWay.Clone( ));
-                                maxCost = newCost;
-                            } else if (newCost == maxCost) {
-                                result.Push(newWay.Clone( ));
+                        if (needToAdd) {
+                            bool canBeResult = true;
+                            for (uint i = 0; i < way.Size; i++) {
+                                if (way[i] == a) {
+                                    canBeResult = false;
+                                    break;
+                                }
+                            }
+                            Vector<Point> newWay = way.Clone( );
+                            newWay.Push(a);
+                            q.Enqueue(new Tuple<Vector<Point>, uint>(newWay.Clone( ), newCost));
+                            if (canBeResult) {
+                                if (newCost > maxCost) {
+                                    result.Size = 0;
+                                    result.Push(newWay.Clone( ));
+                                    maxCost = newCost;
+                                } else if (newCost == maxCost) {
+                                    result.Push(newWay.Clone( ));
+                                }
                             }
                         }
                     }
