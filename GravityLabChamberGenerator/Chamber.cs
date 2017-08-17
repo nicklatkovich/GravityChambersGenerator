@@ -13,6 +13,7 @@ namespace GravityLabChamberGenerator {
         public TextWriter Logger = null;
 
         public event handler WallsCreated;
+        public event handler WayFinded;
 
         public Chamber( ) {
         }
@@ -23,13 +24,16 @@ namespace GravityLabChamberGenerator {
                 Utils.URandom(width - 2) + 1,
                 Utils.URandom(height - 2) + 1);
             chamber.StartPoint = startPoint;
+
             chamber.Logger?.WriteLine("Start Position = " + startPoint);
             chamber.Walls = GenerateRoom(width, height, startPoint);
-            chamber.WallsCreated( );
+            chamber.WallsCreated?.Invoke( );
             chamber.Logger?.WriteLine("Room:");
             chamber.Logger?.Write(WallsGridPresent(chamber.Walls));
+
             Vector<Vector<Point>> ways = GenerateWay(chamber);
             chamber.Way = ways[Utils.URandom(ways.Size)];
+            chamber.WayFinded?.Invoke( );
             foreach (Point wayPoint in chamber.Way) {
                 chamber.Logger?.WriteLine("\t" + wayPoint);
             }

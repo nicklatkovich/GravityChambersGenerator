@@ -66,6 +66,7 @@ namespace Generator {
                         }
                     }
                 }
+                pbRoom.Image?.Dispose( );
                 pbRoom.Image = img;
             };
             logger = Console.Out;
