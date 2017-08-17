@@ -98,11 +98,11 @@
             // 
             this.lblGenMapSeed.Font = new System.Drawing.Font("Consolas", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblGenMapSeed.ForeColor = System.Drawing.Color.White;
-            this.lblGenMapSeed.Location = new System.Drawing.Point(75, 28);
+            this.lblGenMapSeed.Location = new System.Drawing.Point(84, 28);
             this.lblGenMapSeed.Name = "lblGenMapSeed";
             this.lblGenMapSeed.Size = new System.Drawing.Size(153, 26);
             this.lblGenMapSeed.TabIndex = 5;
-            this.lblGenMapSeed.Text = "0";
+            this.lblGenMapSeed.Text = "undefined";
             // 
             // label1
             // 
@@ -111,9 +111,9 @@
             this.label1.ForeColor = System.Drawing.Color.White;
             this.label1.Location = new System.Drawing.Point(6, 28);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(60, 26);
+            this.label1.Size = new System.Drawing.Size(72, 26);
             this.label1.TabIndex = 4;
-            this.label1.Text = "Seed";
+            this.label1.Text = "Seed:";
             // 
             // pbRoom
             // 

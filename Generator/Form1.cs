@@ -39,6 +39,7 @@ namespace Generator {
         private void ClearResult( ) {
             pbRoom.Image?.Dispose( );
             lbWay.Items.Clear( );
+            lblGenMapSeed.Text = "undefined";
         }
 
         private async void btnGenerate_Click(object sender, EventArgs e) {
@@ -74,7 +75,10 @@ namespace Generator {
             chamber?.OnBreakGeneration( );
             ClearResult( );
 
-            Utils.RandomSetSeed(int.Parse(tbMapSeed.Text));
+            int seed = int.Parse(tbMapSeed.Text);
+            lblGenMapSeed.Text = seed.ToString( );
+
+            Utils.RandomSetSeed(seed);
             chamber = new Chamber( );
             await Task.Factory.StartNew(( ) => {
                 Chamber.GenerateInThread(chamber, 16, 8, null, progress);
