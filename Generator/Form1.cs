@@ -74,5 +74,9 @@ namespace Generator {
                 Chamber.GenerateInThread(chamber, 16, 8, null, progress);
             });
         }
+
+        private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
+            chamber?.OnBreakGeneration( );
+        }
     }
 }

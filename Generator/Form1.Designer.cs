@@ -26,12 +26,12 @@
             this.lblMapSeed = new System.Windows.Forms.Label();
             this.btnGenerate = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lbWay = new System.Windows.Forms.ListBox();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lblGenMapSeed = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
             this.pbRoom = new System.Windows.Forms.PictureBox();
             this.tbMapSeed = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.lblGenMapSeed = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lbWay = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbRoom)).BeginInit();
             this.SuspendLayout();
@@ -74,6 +74,47 @@
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Map";
             // 
+            // lbWay
+            // 
+            this.lbWay.Font = new System.Drawing.Font("Consolas", 8F);
+            this.lbWay.FormattingEnabled = true;
+            this.lbWay.Location = new System.Drawing.Point(285, 57);
+            this.lbWay.Name = "lbWay";
+            this.lbWay.Size = new System.Drawing.Size(356, 121);
+            this.lbWay.TabIndex = 7;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Consolas", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(280, 28);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(48, 26);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Way";
+            // 
+            // lblGenMapSeed
+            // 
+            this.lblGenMapSeed.Font = new System.Drawing.Font("Consolas", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblGenMapSeed.ForeColor = System.Drawing.Color.White;
+            this.lblGenMapSeed.Location = new System.Drawing.Point(75, 28);
+            this.lblGenMapSeed.Name = "lblGenMapSeed";
+            this.lblGenMapSeed.Size = new System.Drawing.Size(153, 26);
+            this.lblGenMapSeed.TabIndex = 5;
+            this.lblGenMapSeed.Text = "0";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Consolas", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label1.ForeColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(6, 28);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(60, 26);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Seed";
+            // 
             // pbRoom
             // 
             this.pbRoom.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
@@ -97,47 +138,6 @@
             this.tbMapSeed.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.tbMapSeed.TextChanged += new System.EventHandler(this.tbMapSeed_TextChanged);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Consolas", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label1.ForeColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(6, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(60, 26);
-            this.label1.TabIndex = 4;
-            this.label1.Text = "Seed";
-            // 
-            // lblGenMapSeed
-            // 
-            this.lblGenMapSeed.Font = new System.Drawing.Font("Consolas", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblGenMapSeed.ForeColor = System.Drawing.Color.White;
-            this.lblGenMapSeed.Location = new System.Drawing.Point(75, 28);
-            this.lblGenMapSeed.Name = "lblGenMapSeed";
-            this.lblGenMapSeed.Size = new System.Drawing.Size(153, 26);
-            this.lblGenMapSeed.TabIndex = 5;
-            this.lblGenMapSeed.Text = "0";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Consolas", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.ForeColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(280, 28);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(48, 26);
-            this.label2.TabIndex = 6;
-            this.label2.Text = "Way";
-            // 
-            // lbWay
-            // 
-            this.lbWay.Font = new System.Drawing.Font("Consolas", 8F);
-            this.lbWay.FormattingEnabled = true;
-            this.lbWay.Location = new System.Drawing.Point(285, 57);
-            this.lbWay.Name = "lbWay";
-            this.lbWay.Size = new System.Drawing.Size(356, 121);
-            this.lbWay.TabIndex = 7;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -150,6 +150,7 @@
             this.Controls.Add(this.lblMapSeed);
             this.Name = "Form1";
             this.Text = "Chamber Generator";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbRoom)).EndInit();
