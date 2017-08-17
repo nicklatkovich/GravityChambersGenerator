@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace GravityLabChamberGenerator {
     class Program {
+        private static Chamber chamber;
+
         private static void Main(string[ ] args) {
             int seed = 0;
             bool work = true;
@@ -10,12 +14,9 @@ namespace GravityLabChamberGenerator {
                 Console.Clear( );
                 Utils.RandomSetSeed(seed);
                 Console.WriteLine("#" + seed);
-                Chamber chamber = Chamber.Generate(16, 8);
-                Console.WriteLine("Start position is " + chamber.StartPoint);
-                Console.WriteLine(WallsGridPresent(chamber.Walls));
-                foreach (var a in chamber.Way) {
-                    Console.WriteLine("\t" + a);
-                }
+                chamber = new Chamber( );
+                Thread thr = new Thread(Generate);
+                thr.Start( );
                 bool hasCommand = false;
                 while (!hasCommand) {
                     ConsoleKey key = Console.ReadKey( ).Key;
@@ -37,14 +38,12 @@ namespace GravityLabChamberGenerator {
                         break;
                     }
                 }
+                thr.Abort( );
             }
         }
 
-        private static char WallsPresentorTranslator(bool source) {
-            return source ? '8' : ' ';
-        }
-        private static string WallsGridPresent(Grid<bool> wallsMap) {
-            return wallsMap.Convert(WallsPresentorTranslator).ToString( );
+        private static void Generate( ) {
+            Chamber.Generate(chamber, 16, 8, Console.Out);
         }
     }
 }

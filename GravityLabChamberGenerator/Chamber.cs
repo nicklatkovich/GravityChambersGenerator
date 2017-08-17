@@ -1,28 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 
 namespace GravityLabChamberGenerator {
     class Chamber {
         public Point StartPoint;
-        public Grid<bool> Walls;
-        public Vector<Point> Way;
+        public Grid<bool> Walls = null;
+        public Vector<Point> Way = null;
+        public TextWriter Logger = null;
 
-        private Chamber( ) {
+        public Chamber( ) {
         }
 
-        public static Chamber Generate(uint width, uint height) {
-            Chamber result = new Chamber( );
+        public static void Generate(Chamber chamber, uint width, uint height, TextWriter logger = null) {
+            chamber.Logger = logger;
             Point startPoint = new Point(
                 Utils.URandom(width - 2) + 1,
                 Utils.URandom(height - 2) + 1);
-            //Point startPoint = new Point(13, 5);
-            result.StartPoint = startPoint;
-            result.Walls = GenerateRoom(width, height, startPoint);
-            //result.Walls = LoadWallsMapFromFile("walls.txt");
-            Vector<Vector<Point>> ways = GenerateWay(result);
-            result.Way = ways[Utils.URandom(ways.Size)];
-            return result;
+            chamber.StartPoint = startPoint;
+            chamber.Logger?.WriteLine("Start Position = " + startPoint);
+            chamber.Walls = GenerateRoom(width, height, startPoint);
+            chamber.Logger?.WriteLine("Room:");
+            chamber.Logger?.Write(WallsGridPresent(chamber.Walls));
+            Vector<Vector<Point>> ways = GenerateWay(chamber);
+            chamber.Way = ways[Utils.URandom(ways.Size)];
+            foreach (Point wayPoint in chamber.Way) {
+                chamber.Logger?.WriteLine("\t" + wayPoint);
+            }
+        }
+
+        private static char WallsPresentorTranslator(bool source) {
+            return source ? '#' : '-';
+        }
+        private static string WallsGridPresent(Grid<bool> wallsMap) {
+            return wallsMap.Convert(WallsPresentorTranslator).ToString( );
         }
 
         private static bool RoomConverter(uint source) {
