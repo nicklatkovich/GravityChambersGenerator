@@ -16,6 +16,8 @@ namespace Generator {
         }
 
         private bool tbMapSeed_Correct = true;
+        private int newGenerationSeed = 0;
+        private int oldGenerationSeed = -1;
 
         private void tbMapSeed_TextChanged(object sender, EventArgs e) {
             TextBox tb = sender as TextBox;
@@ -31,9 +33,9 @@ namespace Generator {
                     tb.SelectionStart = 1;
                 }
             }
-            int seed;
-            tbMapSeed_Correct = int.TryParse(tb.Text, out seed) && seed >= 0;
+            tbMapSeed_Correct = int.TryParse(tb.Text, out newGenerationSeed) && newGenerationSeed >= 0;
             tb.BackColor = tbMapSeed_Correct ? Color.FromArgb(30, 30, 30) : Color.Red;
+            ButtonSetEnable(btnGenerate, tbMapSeed_Correct && newGenerationSeed != oldGenerationSeed);
         }
 
         private void ClearResult( ) {
@@ -47,6 +49,8 @@ namespace Generator {
                 return;
             }
 
+            oldGenerationSeed = newGenerationSeed;
+            ButtonSetEnable(btnGenerate, false);
             var progress = new Progress<Chamber.GeneratorEvent>((@event) => {
                 switch (@event) {
                 case Chamber.GeneratorEvent.ROOM_CREATED:
@@ -83,6 +87,12 @@ namespace Generator {
             await Task.Factory.StartNew(( ) => {
                 Chamber.GenerateInThread(chamber, 16, 8, null, progress);
             });
+        }
+
+        private void ButtonSetEnable(Button btn, bool enable) {
+            btn.Enabled = enable;
+            btn.ForeColor = enable ? Color.White : Color.Black;
+
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
