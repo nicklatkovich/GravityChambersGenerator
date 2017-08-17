@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 
 namespace GravityLabChamberGenerator {
-    class Vector<T> : IEnumerable<T>, ICollection<T> {
+    public class Vector<T> : IEnumerable<T>, ICollection<T> {
         private T[ ] _arr = new T[1];
         private uint _size = 0;
         public uint Size {

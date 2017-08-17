@@ -4,11 +4,15 @@ using System.IO;
 using System.Threading.Tasks;
 
 namespace GravityLabChamberGenerator {
-    class Chamber {
+    public class Chamber {
+        public delegate void handler( );
+
         public Point StartPoint;
         public Grid<bool> Walls = null;
         public Vector<Point> Way = null;
         public TextWriter Logger = null;
+
+        public event handler WallsCreated;
 
         public Chamber( ) {
         }
@@ -21,6 +25,7 @@ namespace GravityLabChamberGenerator {
             chamber.StartPoint = startPoint;
             chamber.Logger?.WriteLine("Start Position = " + startPoint);
             chamber.Walls = GenerateRoom(width, height, startPoint);
+            chamber.WallsCreated( );
             chamber.Logger?.WriteLine("Room:");
             chamber.Logger?.Write(WallsGridPresent(chamber.Walls));
             Vector<Vector<Point>> ways = GenerateWay(chamber);

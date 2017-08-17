@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace GravityLabChamberGenerator {
-    class Grid<T> {
+    public class Grid<T> {
         private T[ ][ ] arr;
         public Point Size {
             get; protected set;

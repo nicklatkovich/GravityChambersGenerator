@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 namespace GravityLabChamberGenerator {
-    static class Utils {
+    public static class Utils {
         private static Random _rand = new Random( );
 
         public static double Random( ) => _rand.NextDouble( );
