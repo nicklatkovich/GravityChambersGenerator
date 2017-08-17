@@ -36,6 +36,11 @@ namespace Generator {
             tb.BackColor = tbMapSeed_Correct ? Color.FromArgb(30, 30, 30) : Color.Red;
         }
 
+        private void ClearResult( ) {
+            pbRoom.Image?.Dispose( );
+            lbWay.Items.Clear( );
+        }
+
         private async void btnGenerate_Click(object sender, EventArgs e) {
             if (!tbMapSeed_Correct) {
                 return;
@@ -67,6 +72,7 @@ namespace Generator {
             });
 
             chamber?.OnBreakGeneration( );
+            ClearResult( );
 
             Utils.RandomSetSeed(int.Parse(tbMapSeed.Text));
             chamber = new Chamber( );
