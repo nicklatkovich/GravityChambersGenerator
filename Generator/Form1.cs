@@ -3,25 +3,16 @@ using System;
 using System.Drawing;
 using System.IO;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Generator {
     public partial class Form1 : Form {
 
         Chamber chamber = null;
-        Thread thread = null;
-        TextWriter logger;
 
         public Form1( ) {
             InitializeComponent( );
-        }
-
-        private void UpdateMapPresenter( ) {
-            while (true) {
-                Thread.Sleep(1000);
-                if (chamber?.Walls != null) {
-                }
-            }
         }
 
         private bool tbMapSeed_Correct = true;
@@ -45,32 +36,43 @@ namespace Generator {
             tb.BackColor = tbMapSeed_Correct ? Color.FromArgb(30, 30, 30) : Color.Red;
         }
 
-        private void btnGenerate_Click(object sender, EventArgs e) {
+        private async void btnGenerate_Click(object sender, EventArgs e) {
             if (!tbMapSeed_Correct) {
                 return;
             }
-            if (thread != null) {
-                thread.Abort( );
-                logger.Dispose( );
-            }
-            Utils.RandomSetSeed(int.Parse(tbMapSeed.Text));
-            chamber = new Chamber( );
-            chamber.WallsCreated += ( ) => {
-                Bitmap img = new Bitmap(256, 128);
-                for (uint i = 0; i < chamber.Walls.Width; i++) {
-                    for (uint j = 0; j < chamber.Walls.Height; j++) {
-                        if (chamber.Walls[i, j]) {
-                            for (uint x = 0; x < 256; x++) {
-                                img.SetPixel((int)(i * 16 + x % 16), (int)(j * 16 + x / 16), Color.Red);
+
+            var progress = new Progress<Chamber.GeneratorEvent>((@event) => {
+                switch (@event) {
+                case Chamber.GeneratorEvent.ROOM_CREATED:
+                    Bitmap img = new Bitmap(256, 128);
+                    for (uint i = 0; i < chamber.Walls.Width; i++) {
+                        for (uint j = 0; j < chamber.Walls.Height; j++) {
+                            if (chamber.Walls[i, j]) {
+                                for (uint x = 0; x < 256; x++) {
+                                    img.SetPixel((int)(i * 16 + x % 16), (int)(j * 16 + x / 16), Color.Red);
+                                }
                             }
                         }
                     }
+                    pbRoom.Image?.Dispose( );
+                    pbRoom.Image = img;
+                    break;
+                case Chamber.GeneratorEvent.WAY_FINDED:
+                    lbWay.Items.Clear( );
+                    foreach (var a in chamber.Way) {
+                        lbWay.Items.Add(a.ToString( ));
+                    }
+                    break;
                 }
-                pbRoom.Image?.Dispose( );
-                pbRoom.Image = img;
-            };
-            logger = Console.Out;
-            (thread = new Thread(( ) => Chamber.Generate(chamber, 16, 8))).Start( );
+            });
+
+            chamber?.OnBreakGeneration( );
+
+            Utils.RandomSetSeed(int.Parse(tbMapSeed.Text));
+            chamber = new Chamber( );
+            await Task.Factory.StartNew(( ) => {
+                Chamber.GenerateInThread(chamber, 16, 8, null, progress);
+            });
         }
     }
 }

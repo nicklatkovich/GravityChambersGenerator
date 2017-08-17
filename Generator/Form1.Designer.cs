@@ -30,6 +30,8 @@
             this.tbMapSeed = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.lblGenMapSeed = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.lbWay = new System.Windows.Forms.ListBox();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pbRoom)).BeginInit();
             this.SuspendLayout();
@@ -58,6 +60,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.lbWay);
+            this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.lblGenMapSeed);
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.pbRoom);
@@ -114,6 +118,26 @@
             this.lblGenMapSeed.TabIndex = 5;
             this.lblGenMapSeed.Text = "0";
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Consolas", 16F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.ForeColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(280, 28);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(48, 26);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Way";
+            // 
+            // lbWay
+            // 
+            this.lbWay.Font = new System.Drawing.Font("Consolas", 8F);
+            this.lbWay.FormattingEnabled = true;
+            this.lbWay.Location = new System.Drawing.Point(285, 57);
+            this.lbWay.Name = "lbWay";
+            this.lbWay.Size = new System.Drawing.Size(356, 121);
+            this.lbWay.TabIndex = 7;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -143,6 +167,8 @@
         private System.Windows.Forms.Label lblGenMapSeed;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox tbMapSeed;
+        private System.Windows.Forms.ListBox lbWay;
+        private System.Windows.Forms.Label label2;
     }
 }
 

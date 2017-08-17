@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace GravityLabChamberGenerator {
@@ -11,14 +12,33 @@ namespace GravityLabChamberGenerator {
         public Grid<bool> Walls = null;
         public Vector<Point> Way = null;
         public TextWriter Logger = null;
+        public Thread thread = null;
 
         public event handler WallsCreated;
         public event handler WayFinded;
+        public event handler BreakGeneration;
 
         public Chamber( ) {
         }
 
-        public static void Generate(Chamber chamber, uint width, uint height, TextWriter logger = null) {
+        public void OnBreakGeneration( ) {
+            BreakGeneration?.Invoke( );
+            thread.Abort( );
+        }
+
+        public enum GeneratorEvent {
+            ROOM_CREATED,
+            WAY_FINDED,
+        }
+
+        public static Thread GenerateInThread(Chamber chamber, uint width, uint height, TextWriter logger = null, IProgress<GeneratorEvent> progress = null) {
+            (chamber.thread = new Thread(( ) => {
+                Generate(chamber, width, height, logger, progress);
+            })).Start( );
+            return chamber.thread;
+        }
+
+        public static void Generate(Chamber chamber, uint width, uint height, TextWriter logger = null, IProgress<GeneratorEvent> progress = null) {
             chamber.Logger = logger;
             Point startPoint = new Point(
                 Utils.URandom(width - 2) + 1,
@@ -27,12 +47,15 @@ namespace GravityLabChamberGenerator {
 
             chamber.Logger?.WriteLine("Start Position = " + startPoint);
             chamber.Walls = GenerateRoom(width, height, startPoint);
+            progress?.Report(GeneratorEvent.ROOM_CREATED);
             chamber.WallsCreated?.Invoke( );
             chamber.Logger?.WriteLine("Room:");
             chamber.Logger?.Write(WallsGridPresent(chamber.Walls));
 
-            Vector<Vector<Point>> ways = GenerateWay(chamber);
+            Vector<Vector<Point>> ways = null;
+            ways = GenerateWay(chamber);
             chamber.Way = ways[Utils.URandom(ways.Size)];
+            progress?.Report(GeneratorEvent.WAY_FINDED);
             chamber.WayFinded?.Invoke( );
             foreach (Point wayPoint in chamber.Way) {
                 chamber.Logger?.WriteLine("\t" + wayPoint);
