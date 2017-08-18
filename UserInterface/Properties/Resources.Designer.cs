@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Generator.Properties {
+namespace GravityLabsUserInterface.Properties {
 
 
     /// <summary>

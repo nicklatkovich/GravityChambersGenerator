@@ -1,4 +1,4 @@
-﻿namespace GravityLabChamberGenerator {
+﻿namespace GravityLabs._utils {
     public class Point {
         public int X;
         public int Y;

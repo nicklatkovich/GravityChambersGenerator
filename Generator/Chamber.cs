@@ -1,10 +1,8 @@
-﻿using System;
+﻿using GravityLabs._utils;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace GravityLabChamberGenerator {
+namespace GravityLabs {
     public class Chamber {
 
         public Point StartPoint;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GravityLabChamberGenerator {
+namespace GravityLabs._utils {
     public static class Utils {
         private static Random _rand = new Random( );
 

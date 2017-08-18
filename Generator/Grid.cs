@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace GravityLabChamberGenerator {
+namespace GravityLabs._utils {
     public class Grid<T> {
         private T[ ][ ] arr;
         public Point Size {

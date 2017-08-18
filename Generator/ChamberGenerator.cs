@@ -1,12 +1,10 @@
-﻿using System;
+﻿using GravityLabs._utils;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
-namespace GravityLabChamberGenerator {
+namespace GravityLabs.ChambersGenerator {
     public class ChamberGenerator {
 
         public Chamber Chamber = new Chamber( );

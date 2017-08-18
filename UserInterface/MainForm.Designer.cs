@@ -1,5 +1,5 @@
-﻿namespace Generator {
-    partial class Form1 {
+﻿namespace GravityLabs.ChambersGenerator.UserInterface {
+    partial class MainForm {
         /// <summary>
         /// Required designer variable.
         /// </summary>
@@ -23,18 +23,18 @@
         /// the contents of this method with the code editor.
         /// </summary>
         private void InitializeComponent( ) {
-            this.lblMapSeed = new System.Windows.Forms.Label();
-            this.btnGenerate = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.lbWay = new System.Windows.Forms.ListBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lblGenMapSeed = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
-            this.pbRoom = new System.Windows.Forms.PictureBox();
-            this.tbMapSeed = new System.Windows.Forms.TextBox();
-            this.groupBox1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbRoom)).BeginInit();
-            this.SuspendLayout();
+            this.lblMapSeed = new System.Windows.Forms.Label( );
+            this.btnGenerate = new System.Windows.Forms.Button( );
+            this.groupBox1 = new System.Windows.Forms.GroupBox( );
+            this.lbWay = new System.Windows.Forms.ListBox( );
+            this.label2 = new System.Windows.Forms.Label( );
+            this.lblGenMapSeed = new System.Windows.Forms.Label( );
+            this.label1 = new System.Windows.Forms.Label( );
+            this.pbRoom = new System.Windows.Forms.PictureBox( );
+            this.tbMapSeed = new System.Windows.Forms.TextBox( );
+            this.groupBox1.SuspendLayout( );
+            ((System.ComponentModel.ISupportInitialize)(this.pbRoom)).BeginInit( );
+            this.SuspendLayout( );
             // 
             // lblMapSeed
             // 
@@ -154,10 +154,10 @@
             this.Text = "Chamber Generator";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Form1_FormClosed);
             this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pbRoom)).EndInit();
+            this.groupBox1.PerformLayout( );
+            ((System.ComponentModel.ISupportInitialize)(this.pbRoom)).EndInit( );
             this.ResumeLayout(false);
-            this.PerformLayout();
+            this.PerformLayout( );
 
         }
 

@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("GravityLabChamberGenerator")]
+[assembly: AssemblyTitle("Generator")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("GravityLabChamberGenerator")]
+[assembly: AssemblyProduct("Generator")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("1fae913b-4881-4505-af0f-1eea538225d7")]
+[assembly: Guid("92aa366c-0348-45a3-a6e9-b92305fd09f7")]
 
 // Version information for an assembly consists of the following four values:
 //

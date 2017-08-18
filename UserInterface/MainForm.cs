@@ -1,17 +1,15 @@
-﻿using GravityLabChamberGenerator;
+﻿using GravityLabs._utils;
 using System;
 using System.Drawing;
-using System.IO;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Generator {
-    public partial class Form1 : Form {
+namespace GravityLabs.ChambersGenerator.UserInterface {
+    public partial class MainForm : Form {
 
         private ChamberGeneratorAsync Generator = null;
 
-        public Form1( ) {
+        public MainForm( ) {
             InitializeComponent( );
         }
 
