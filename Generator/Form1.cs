@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace Generator {
     public partial class Form1 : Form {
 
-        private ChamberGenerator Generator = null;
+        private ChamberGeneratorAsync Generator = null;
 
         public Form1( ) {
             InitializeComponent( );
@@ -44,7 +44,7 @@ namespace Generator {
             lblGenMapSeed.Text = "undefined";
         }
 
-        private /*async*/ void btnGenerate_Click(object sender, EventArgs e) {
+        private async void btnGenerate_Click(object sender, EventArgs e) {
             if (!tbMapSeed_Correct) {
                 return;
             }
@@ -76,17 +76,16 @@ namespace Generator {
                 }
             });
 
-            //Generator?.OnBreakGeneration( );
+            Generator?.BreakGeneration( );
             ClearResult( );
 
             int seed = int.Parse(tbMapSeed.Text);
             lblGenMapSeed.Text = seed.ToString( );
 
             Utils.RandomSetSeed(seed);
-            Generator = ChamberGenerator.Create(16, 8, null, progress);
-            //await Task.Factory.StartNew(( ) => {
-            //    Chamber.GenerateInThread(Generator, 16, 8, null, progress);
-            //});
+            await Task.Factory.StartNew(( ) => {
+                Generator = ChamberGeneratorAsync.CreateChamberInThread(16, 8, null, progress);
+            });
         }
 
         private void ButtonSetEnable(Button btn, bool enable) {
@@ -96,7 +95,7 @@ namespace Generator {
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
-            //Generator?.OnBreakGeneration( );
+            Generator?.BreakGeneration( );
         }
     }
 }

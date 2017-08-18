@@ -12,33 +12,17 @@ namespace GravityLabChamberGenerator {
         public Chamber Chamber = new Chamber( );
         public Vector<Point> Way = new Vector<Point>( );
         public StreamWriter Logger = null;
-        //public Thread GenerationThread = null;
 
         public delegate void ChamberGeneratorEvent( );
         public event ChamberGeneratorEvent WallsCreated;
         public event ChamberGeneratorEvent WayFinded;
-        //public event ChamberGeneratorEvent GenerationAborted;
-
-        //public void BreakGeneration( ) {
-        //    GenerationAborted?.Invoke( );
-        //    GenerationThread.Abort( );
-        //}
 
         public enum Event {
             ROOM_CREATED,
             WAY_FINDED,
         }
 
-        //public static Thread GenerateInThread(Chamber chamber, uint width, uint height, TextWriter logger = null, IProgress<GeneratorEvent> progress = null) {
-        //    (chamber.thread = new Thread(( ) => {
-        //        Generate(chamber, width, height, logger, progress);
-        //    })).Start( );
-        //    return chamber.thread;
-        //}
-
-
-
-        private void Generate(uint width, uint height, StreamWriter logger = null, IProgress<Event> progress = null) {
+        protected void Generate(uint width, uint height, StreamWriter logger = null, IProgress<Event> progress = null) {
             Logger = logger;
             Point startPoint = new Point(
                 Utils.URandom(width - 2) + 1,
@@ -202,13 +186,13 @@ namespace GravityLabChamberGenerator {
             return result;
         }
 
-        public static ChamberGenerator Create(uint width, uint height, StreamWriter logger = null, IProgress<Event> progress = null) {
+        public static ChamberGenerator CreateChamber(uint width, uint height, StreamWriter logger = null, IProgress<Event> progress = null) {
             ChamberGenerator result = new ChamberGenerator( );
             result.Generate(width, height, logger, progress);
             return result;
         }
 
-        private ChamberGenerator( ) {
+        protected ChamberGenerator( ) {
 
         }
 
