@@ -43,7 +43,7 @@ namespace GravityLabChamberGenerator {
         }
 
         private static void Generate( ) {
-            Chamber.Generate(chamber, 16, 8, Console.Out);
+            //Chamber.Generate(chamber, 16, 8, Console.Out);
         }
     }
 }

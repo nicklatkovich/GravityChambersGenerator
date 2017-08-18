@@ -67,14 +67,24 @@ namespace GravityLabChamberGenerator {
             }
         }
 
-        public Grid<K> Convert<K>(Func<T, K> translator) {
-            Grid<K> result = new Grid<K>(Width, Height, translator(this[0, 0]));
+        public Grid<K> Convert<K>(Func<T, K> converter) {
+            Grid<K> result = new Grid<K>(Width, Height, converter(this[0, 0]));
             for (uint x = 0; x < Width; x++) {
                 for (uint y = 0; y < Height; y++) {
-                    result[x, y] = translator(this[x,y]);
+                    result[x, y] = converter(this[x, y]);
                 }
             }
             return result;
-         }
+        }
+
+        public Grid<K> Convert<K>(Dictionary<T, K> converter) {
+            Grid<K> result = new Grid<K>(Width, Height, converter[this[0, 0]]);
+            for (uint x = 0; x < Width; x++) {
+                for (uint y = 0; y < Height; y++) {
+                    result[x, y] = converter[this[x, y]];
+                }
+            }
+            return result;
+        }
     }
 }

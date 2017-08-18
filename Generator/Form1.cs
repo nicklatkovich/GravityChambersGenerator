@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace Generator {
     public partial class Form1 : Form {
 
-        Chamber chamber = null;
+        private ChamberGenerator Generator = null;
 
         public Form1( ) {
             InitializeComponent( );
@@ -44,20 +44,20 @@ namespace Generator {
             lblGenMapSeed.Text = "undefined";
         }
 
-        private async void btnGenerate_Click(object sender, EventArgs e) {
+        private /*async*/ void btnGenerate_Click(object sender, EventArgs e) {
             if (!tbMapSeed_Correct) {
                 return;
             }
 
             oldGenerationSeed = newGenerationSeed;
             ButtonSetEnable(btnGenerate, false);
-            var progress = new Progress<Chamber.GeneratorEvent>((@event) => {
+            var progress = new Progress<ChamberGenerator.Event>((@event) => {
                 switch (@event) {
-                case Chamber.GeneratorEvent.ROOM_CREATED:
+                case ChamberGenerator.Event.ROOM_CREATED:
                     Bitmap img = new Bitmap(256, 128);
-                    for (uint i = 0; i < chamber.Walls.Width; i++) {
-                        for (uint j = 0; j < chamber.Walls.Height; j++) {
-                            if (chamber.Walls[i, j]) {
+                    for (uint i = 0; i < Generator.Chamber.Walls.Width; i++) {
+                        for (uint j = 0; j < Generator.Chamber.Walls.Height; j++) {
+                            if (Generator.Chamber.Walls[i, j]) {
                                 for (uint x = 0; x < 256; x++) {
                                     img.SetPixel((int)(i * 16 + x % 16), (int)(j * 16 + x / 16), Color.Red);
                                 }
@@ -67,26 +67,26 @@ namespace Generator {
                     pbRoom.Image?.Dispose( );
                     pbRoom.Image = img;
                     break;
-                case Chamber.GeneratorEvent.WAY_FINDED:
+                case ChamberGenerator.Event.WAY_FINDED:
                     lbWay.Items.Clear( );
-                    foreach (var a in chamber.Way) {
+                    foreach (var a in Generator.Way) {
                         lbWay.Items.Add(a.ToString( ));
                     }
                     break;
                 }
             });
 
-            chamber?.OnBreakGeneration( );
+            //Generator?.OnBreakGeneration( );
             ClearResult( );
 
             int seed = int.Parse(tbMapSeed.Text);
             lblGenMapSeed.Text = seed.ToString( );
 
             Utils.RandomSetSeed(seed);
-            chamber = new Chamber( );
-            await Task.Factory.StartNew(( ) => {
-                Chamber.GenerateInThread(chamber, 16, 8, null, progress);
-            });
+            Generator = ChamberGenerator.Create(16, 8, null, progress);
+            //await Task.Factory.StartNew(( ) => {
+            //    Chamber.GenerateInThread(Generator, 16, 8, null, progress);
+            //});
         }
 
         private void ButtonSetEnable(Button btn, bool enable) {
@@ -96,7 +96,7 @@ namespace Generator {
         }
 
         private void Form1_FormClosed(object sender, FormClosedEventArgs e) {
-            chamber?.OnBreakGeneration( );
+            //Generator?.OnBreakGeneration( );
         }
     }
 }
